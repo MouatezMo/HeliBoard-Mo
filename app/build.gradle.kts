@@ -18,9 +18,16 @@ android {
         versionCode = 4006
         versionName = "4.0-dev1"
         ndk {
-            abiFilters.clear()
-            abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
-        }
+    val buildAbi = project.findProperty("buildAbi") as String?
+
+    if (buildAbi != null) {
+        abiFilters.clear()
+        abiFilters.add(buildAbi)
+    } else {
+        abiFilters.clear()
+        abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
+    }
+}
         proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
 
